@@ -14,26 +14,20 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $gender = $this->faker->randomElement(['male', 'female']);
+        $genderValue = $gender === 'male' ? 1 : 2;
+
         return [
-            'name' => $this->faker->name(),
+            'firstname' => $this->faker->firstName($gender),
+            'lastname' => $this->faker->lastName(),
+            'address' => $this->faker->address(),
+            'housenumber' => $this->faker->randomDigitNotNull(),
+            'postalcode' => $this->faker->postcode(),
+            'city' => $this->faker->city(),
+            'phonenumber' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'gender' => $genderValue
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function unverified()
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
-    }
 }
